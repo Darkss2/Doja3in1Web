@@ -1,0 +1,673 @@
+<!DOCTYPE html>
+<html lang="fr" class="scroll-smooth">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>DUJA | Nabra Dziriya - Formations & Concept Store</title>
+    
+    <!-- Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    
+    <!-- Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600&family=Playfair+Display:ital,wght@0,400;0,600;0,700;1,400&family=Poppins:wght@400;500;600;700&display=swap" rel="stylesheet">
+    
+    <!-- FontAwesome Icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+
+    <!-- Tailwind Config -->
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        duja: {
+                            bg: '#FAFAFA',
+                            mauve: '#D8B4D8',    
+                            mauveDark: '#a882a8',
+                            text: '#2C2C2C', 
+                            gold: '#C5A059',
+                            alert: '#E53E3E',
+                        }
+                    },
+                    fontFamily: {
+                        sans: ['Inter', 'sans-serif'],
+                        display: ['Playfair Display', 'serif'], // Elegant headings
+                        body: ['Poppins', 'sans-serif'],
+                    },
+                    animation: {
+                        'pulse-fast': 'pulse 1.5s cubic-bezier(0.4, 0, 0.6, 1) infinite',
+                        'bounce-slow': 'bounce 3s infinite',
+                        'fade-in': 'fadeIn 0.5s ease-out forwards',
+                    },
+                    keyframes: {
+                        fadeIn: {
+                            '0%': { opacity: '0', transform: 'translateY(10px)' },
+                            '100%': { opacity: '1', transform: 'translateY(0)' },
+                        }
+                    }
+                }
+            }
+        }
+    </script>
+
+    <style>
+        body { background-color: #FAFAFA; color: #2C2C2C; }
+        
+        /* Smooth Fade In Sections */
+        .reveal { opacity: 0; transform: translateY(30px); transition: all 0.8s ease-out; }
+        .reveal.active { opacity: 1; transform: translateY(0); }
+
+        /* Custom Scrollbar */
+        ::-webkit-scrollbar { width: 8px; }
+        ::-webkit-scrollbar-track { background: #f1f1f1; }
+        ::-webkit-scrollbar-thumb { background: #D8B4D8; border-radius: 4px; }
+        ::-webkit-scrollbar-thumb:hover { background: #a882a8; }
+
+        /* Badge Pulse Animation (Red "Vite!") */
+        .badge-pulse {
+            box-shadow: 0 0 0 0 rgba(229, 62, 62, 0.7);
+            animation: pulse-red 1.5s infinite;
+        }
+
+        @keyframes pulse-red {
+            0% { transform: scale(0.95); box-shadow: 0 0 0 0 rgba(229, 62, 62, 0.7); }
+            70% { transform: scale(1); box-shadow: 0 0 0 6px rgba(229, 62, 62, 0); }
+            100% { transform: scale(0.95); box-shadow: 0 0 0 0 rgba(229, 62, 62, 0); }
+        }
+
+        /* Sidebar Link Hover Effect */
+        .sidebar-link { transition: all 0.3s ease; border-left: 3px solid transparent; }
+        .sidebar-link:hover, .sidebar-link.active { 
+            background-color: #fff; 
+            border-left-color: #D8B4D8;
+            padding-left: 1.2rem; 
+            color: #D8B4D8;
+            font-weight: 600;
+        }
+        
+        /* Horizontal Scroll Hide */
+        .hide-scroll::-webkit-scrollbar { display: none; }
+        .hide-scroll { -ms-overflow-style: none; scrollbar-width: none; }
+
+        /* Button Gradient for WhatsApp */
+        .btn-whatsapp {
+            background: linear-gradient(90deg, #25D366 0%, #128C7E 100%);
+        }
+    </style>
+</head>
+<body class="antialiased flex flex-col min-h-screen font-body">
+
+    <!-- 1. Header -->
+    <nav id="main-header" class="fixed w-full z-50 top-0 transition-all duration-300 bg-white/90 backdrop-blur-md shadow-sm">
+        <div class="container mx-auto px-6 lg:px-12 py-4 flex justify-between items-center">
+            <a href="#" class="font-display font-bold text-2xl tracking-widest text-duja-text uppercase flex items-center gap-2">
+                <span class="w-8 h-8 bg-duja-mauve rounded-full flex items-center justify-center text-white text-sm font-sans">N</span>
+                Nabra<span class="text-duja-mauve">.</span>Dz
+            </a>
+
+            <div class="hidden md:flex space-x-8 text-sm font-medium tracking-wide text-gray-600 items-center">
+                <a href="#hero" class="hover:text-duja-mauve transition-colors">Accueil</a>
+                <a href="#formations" class="hover:text-duja-mauve transition-colors">Formations</a>
+                <a href="#boutique" class="hover:text-duja-mauve transition-colors">Boutique</a>
+                <a href="#contact" class="px-6 py-2 bg-black text-white rounded-full hover:bg-duja-mauve transition-colors shadow-lg">Contact</a>
+            </div>
+
+            <button id="mobile-menu-btn" class="md:hidden text-2xl text-duja-text"><i class="fa-solid fa-bars"></i></button>
+        </div>
+        
+        <!-- Mobile Menu -->
+        <div id="mobile-menu" class="fixed inset-0 bg-white z-40 transform translate-x-full transition-transform duration-300 flex flex-col justify-center items-center space-y-8 md:hidden">
+            <button id="close-menu-btn" class="absolute top-6 right-6 text-2xl text-duja-text"><i class="fa-solid fa-times"></i></button>
+            <a href="#hero" class="text-2xl font-display mobile-link">Accueil</a>
+            <a href="#formations" class="text-2xl font-display mobile-link">Formations</a>
+            <a href="#boutique" class="text-2xl font-display mobile-link">Boutique</a>
+            <a href="#contact" class="text-2xl font-display mobile-link">Contact</a>
+        </div>
+    </nav>
+
+    <!-- 2. Hero Section -->
+    <header id="hero" class="relative pt-32 pb-20 lg:pt-48 lg:pb-32 overflow-hidden bg-[#FDFBF9]">
+        <div class="container mx-auto px-6 lg:px-12 flex flex-col lg:flex-row items-center gap-12 relative z-10">
+            <div class="lg:w-1/2 text-center lg:text-left reveal active">
+                <span class="inline-block py-1 px-4 rounded-full bg-pink-50 text-duja-mauve text-xs font-bold tracking-widest mb-6 uppercase border border-pink-100">
+                    <i class="fa-solid fa-star text-duja-gold mr-1"></i> Nouvelle Collection 2025
+                </span>
+                <h1 class="text-5xl lg:text-7xl font-display font-bold text-duja-text leading-tight mb-6">
+                    L'Art de créer <br> <span class="text-transparent bg-clip-text bg-gradient-to-r from-duja-mauve to-purple-400">à l'Algérienne.</span>
+                </h1>
+                <p class="text-gray-500 text-lg max-w-lg mx-auto lg:mx-0 mb-10 font-light leading-relaxed">
+                    Découvrez nos formations exclusives pour entreprendre et notre boutique de tissus et accessoires soigneusement sélectionnés.
+                </p>
+                <div class="flex flex-col sm:flex-row justify-center lg:justify-start gap-4">
+                    <a href="#boutique" class="px-8 py-4 bg-duja-text text-white rounded-full font-medium shadow-xl hover:bg-duja-mauve hover:scale-105 transition-all duration-300">
+                        Explorer la Boutique
+                    </a>
+                    <a href="#formations" class="px-8 py-4 bg-white text-duja-text border border-gray-200 rounded-full font-medium hover:border-duja-mauve hover:text-duja-mauve transition-all">
+                        Nos Formations
+                    </a>
+                </div>
+            </div>
+            
+            <div class="lg:w-1/2 relative reveal active" style="transition-delay: 200ms;">
+                <div class="relative z-10 rounded-3xl overflow-hidden shadow-2xl rotate-2 hover:rotate-0 transition-transform duration-500">
+                    <img src="https://images.unsplash.com/photo-1490481651871-ab68de25d43d?q=80&w=800&auto=format&fit=crop" alt="Fashion Design" class="w-full h-auto object-cover">
+                    <!-- Floating Badge -->
+                    <div class="absolute bottom-6 left-6 bg-white/90 backdrop-blur px-6 py-3 rounded-xl shadow-lg flex items-center gap-3 animate-bounce-slow">
+                        <div class="bg-green-100 p-2 rounded-full text-green-600"><i class="fa-solid fa-check"></i></div>
+                        <div>
+                            <p class="text-xs text-gray-500 font-bold uppercase">Best Seller</p>
+                            <p class="font-display font-bold text-sm">Formation Couture</p>
+                        </div>
+                    </div>
+                </div>
+                <!-- Decorative Blobs -->
+                <div class="absolute top-[-10%] right-[-10%] w-64 h-64 bg-duja-mauve/20 rounded-full blur-3xl -z-10"></div>
+                <div class="absolute bottom-[-10%] left-[-10%] w-64 h-64 bg-duja-gold/20 rounded-full blur-3xl -z-10"></div>
+            </div>
+        </div>
+    </header>
+
+    <!-- 3. Formations Section -->
+    <section id="formations" class="py-24 bg-white">
+        <div class="container mx-auto px-6 lg:px-12">
+            <div class="text-center mb-16 reveal">
+                <h2 class="text-4xl font-display font-bold mb-4">Formations Professionnelles</h2>
+                <div class="w-20 h-1 bg-duja-mauve mx-auto rounded-full"></div>
+                <p class="mt-4 text-gray-500">Lancez votre projet avec nos expertes.</p>
+            </div>
+            <div id="formations-grid" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+                <!-- JS Generated -->
+            </div>
+        </div>
+    </section>
+
+    <!-- 4. La Boutique (Sidebar & Filters) -->
+    <section id="boutique" class="py-24 bg-[#F8F9FA]">
+        <div class="container mx-auto px-6 lg:px-12">
+            <div class="text-center mb-12 reveal">
+                <span class="text-duja-gold font-bold tracking-widest uppercase text-sm">Le Concept Store</span>
+                <h2 class="text-4xl font-display font-bold mt-2">La Boutique Complète</h2>
+            </div>
+
+            <div class="flex flex-col lg:flex-row gap-10 reveal">
+                
+                <!-- SIDEBAR (Filter Menu) -->
+                <aside class="lg:w-1/4 flex-shrink-0">
+                    <div class="bg-white p-6 rounded-2xl shadow-sm sticky top-24 border border-gray-100">
+                        <h3 class="font-display font-bold text-xl mb-6 flex items-center gap-2 text-duja-mauve">
+                            <i class="fa-solid fa-layer-group"></i> Catégories
+                        </h3>
+                        <nav class="space-y-1 flex flex-col">
+                            <button class="sidebar-link active w-full text-left px-4 py-3 text-gray-600 font-medium rounded-r-lg flex justify-between items-center" onclick="filterProducts('all', this)">
+                                Tout Voir <i class="fa-solid fa-chevron-right text-xs opacity-50"></i>
+                            </button>
+                            <button class="sidebar-link w-full text-left px-4 py-3 text-gray-600 font-medium rounded-r-lg flex justify-between items-center" onclick="filterProducts('tissu', this)">
+                                Tissus au mètre <i class="fa-solid fa-chevron-right text-xs opacity-50"></i>
+                            </button>
+                            <button class="sidebar-link w-full text-left px-4 py-3 text-gray-600 font-medium rounded-r-lg flex justify-between items-center" onclick="filterProducts('mercerie', this)">
+                                Mercerie & Outils <i class="fa-solid fa-chevron-right text-xs opacity-50"></i>
+                            </button>
+                            <button class="sidebar-link w-full text-left px-4 py-3 text-gray-600 font-medium rounded-r-lg flex justify-between items-center" onclick="filterProducts('patron', this)">
+                                Patrons & Kits <i class="fa-solid fa-chevron-right text-xs opacity-50"></i>
+                            </button>
+                            <button class="sidebar-link w-full text-left px-4 py-3 text-gray-600 font-medium rounded-r-lg flex justify-between items-center" onclick="filterProducts('lifestyle', this)">
+                                Lifestyle & Digital <i class="fa-solid fa-chevron-right text-xs opacity-50"></i>
+                            </button>
+                        </nav>
+
+                        <!-- Promo Box Sidebar -->
+                        <div class="mt-8 bg-duja-text text-white p-6 rounded-xl text-center relative overflow-hidden group cursor-pointer shadow-lg">
+                            <div class="absolute inset-0 bg-duja-mauve opacity-0 group-hover:opacity-20 transition-opacity"></div>
+                            <h4 class="font-display font-bold text-3xl mb-1 text-duja-gold">-20%</h4>
+                            <p class="text-sm text-gray-300 mb-4">Sur votre première commande tissus</p>
+                            <div class="bg-white/10 p-2 rounded border border-dashed border-white/30 text-xs font-mono">CODE: NABRA20</div>
+                        </div>
+                    </div>
+                </aside>
+
+                <!-- PRODUCTS GRID -->
+                <main class="lg:w-3/4">
+                    <!-- Toolbar -->
+                    <div class="flex flex-col sm:flex-row justify-between items-center mb-6 text-sm text-gray-500 gap-4">
+                        <span id="product-count" class="font-medium">Chargement...</span>
+                        <div class="flex items-center gap-2">
+                            <span class="text-gray-400">Trier par:</span> 
+                            <select class="bg-transparent font-bold text-gray-800 focus:outline-none cursor-pointer border-b border-gray-300 pb-1">
+                                <option>Populaire</option>
+                                <option>Prix croissant</option>
+                                <option>Nouveauté</option>
+                            </select>
+                        </div>
+                    </div>
+
+                    <!-- Grid Container -->
+                    <div id="products-grid" class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
+                        <!-- JS Injected -->
+                    </div>
+                </main>
+            </div>
+        </div>
+    </section>
+
+    <!-- 5. Contact Section (Simple & Clear) -->
+    <section id="contact" class="py-24 bg-[#111] text-white relative overflow-hidden">
+        <!-- Background Accents -->
+        <div class="absolute top-0 right-0 w-96 h-96 bg-duja-mauve/10 rounded-full blur-[100px]"></div>
+        <div class="absolute bottom-0 left-0 w-96 h-96 bg-duja-gold/5 rounded-full blur-[100px]"></div>
+
+        <div class="container mx-auto px-6 lg:px-12 relative z-10">
+            <div class="flex flex-col lg:flex-row gap-16 items-start">
+                
+                <!-- Contact Info -->
+                <div class="lg:w-1/2 reveal">
+                    <span class="text-duja-mauve font-bold tracking-widest uppercase text-sm mb-2 block">Contact Rapide</span>
+                    <h2 class="text-5xl font-display font-bold mb-6">Parlons de votre <br> projet.</h2>
+                    <p class="text-gray-400 text-lg mb-10 leading-relaxed max-w-md">
+                        Besoin d'aide pour une commande ou une question sur nos formations ? Nous répondons sous 24h.
+                    </p>
+                    
+                    <div class="space-y-6">
+                        <div class="flex items-center gap-4 group cursor-pointer hover:bg-white/5 p-4 rounded-xl transition-all">
+                            <div class="w-12 h-12 rounded-full bg-[#25D366]/20 flex items-center justify-center text-[#25D366] text-xl">
+                                <i class="fa-brands fa-whatsapp"></i>
+                            </div>
+                            <div>
+                                <p class="text-xs text-gray-500 uppercase font-bold">WhatsApp (Commande)</p>
+                                <p class="text-xl font-medium text-white group-hover:text-[#25D366] transition-colors">0793 72 65 58</p>
+                            </div>
+                        </div>
+
+                        <div class="flex items-center gap-4 group cursor-pointer hover:bg-white/5 p-4 rounded-xl transition-all">
+                            <div class="w-12 h-12 rounded-full bg-duja-mauve/20 flex items-center justify-center text-duja-mauve text-xl">
+                                <i class="fa-solid fa-phone"></i>
+                            </div>
+                            <div>
+                                <p class="text-xs text-gray-500 uppercase font-bold">Téléphone (Support)</p>
+                                <p class="text-xl font-medium text-white group-hover:text-duja-mauve transition-colors">0562 63 34 60</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Simple Form (3 Fields) -->
+                <div class="lg:w-1/2 w-full reveal">
+                    <div class="bg-white rounded-3xl p-8 lg:p-10 shadow-2xl">
+                        <h3 class="text-2xl font-bold text-gray-800 mb-6">Envoyer un message</h3>
+                        <form class="space-y-5">
+                            <div>
+                                <label class="block text-xs font-bold text-gray-400 uppercase mb-1 ml-1">Nom complet</label>
+                                <input type="text" placeholder="Votre nom" class="w-full bg-gray-50 border border-gray-200 rounded-xl px-4 py-3 text-gray-800 focus:border-duja-mauve focus:bg-white focus:ring-0 outline-none transition-all">
+                            </div>
+                            <div>
+                                <label class="block text-xs font-bold text-gray-400 uppercase mb-1 ml-1">Numéro de Téléphone</label>
+                                <input type="tel" placeholder="05 XX XX XX XX" class="w-full bg-gray-50 border border-gray-200 rounded-xl px-4 py-3 text-gray-800 focus:border-duja-mauve focus:bg-white focus:ring-0 outline-none transition-all">
+                            </div>
+                            <div>
+                                <label class="block text-xs font-bold text-gray-400 uppercase mb-1 ml-1">Message</label>
+                                <textarea rows="3" placeholder="Je voudrais savoir..." class="w-full bg-gray-50 border border-gray-200 rounded-xl px-4 py-3 text-gray-800 focus:border-duja-mauve focus:bg-white focus:ring-0 outline-none transition-all"></textarea>
+                            </div>
+                            <button type="button" class="w-full py-4 bg-duja-text text-white font-bold rounded-xl hover:bg-duja-mauve shadow-lg hover:shadow-duja-mauve/50 transition-all transform hover:-translate-y-1">
+                                Envoyer maintenant
+                            </button>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="bg-gray-50 border-t border-gray-200 py-12">
+        <div class="container mx-auto px-6 text-center">
+            <h2 class="font-display font-bold text-2xl text-duja-text mb-4">Nabra<span class="text-duja-mauve">.</span>Dz</h2>
+            <div class="flex justify-center gap-6 mb-8">
+                <a href="#" class="w-10 h-10 rounded-full bg-white shadow flex items-center justify-center text-gray-600 hover:text-pink-500 transition-colors"><i class="fa-brands fa-instagram"></i></a>
+                <a href="#" class="w-10 h-10 rounded-full bg-white shadow flex items-center justify-center text-gray-600 hover:text-blue-600 transition-colors"><i class="fa-brands fa-facebook-f"></i></a>
+                <a href="#" class="w-10 h-10 rounded-full bg-white shadow flex items-center justify-center text-gray-600 hover:text-green-500 transition-colors"><i class="fa-brands fa-whatsapp"></i></a>
+            </div>
+            <p class="text-gray-400 text-sm">&copy; 2025 Nabra Dziriya. Fait avec <i class="fa-solid fa-heart text-red-400"></i> en Algérie.</p>
+        </div>
+    </footer>
+
+    <!-- WhatsApp Floating Button -->
+    <a href="https://wa.me/213793726558" target="_blank" class="fixed bottom-6 right-6 w-14 h-14 bg-[#25D366] text-white rounded-full shadow-2xl flex items-center justify-center text-3xl hover:scale-110 transition-transform z-40 animate-pulse-fast">
+        <i class="fa-brands fa-whatsapp"></i>
+    </a>
+
+    <!-- FORMATION MODAL (NEW FEATURE Added) -->
+    <div id="formation-modal" class="fixed inset-0 z-[110] hidden animate-fade-in">
+        <div class="absolute inset-0 bg-black/60 backdrop-blur-sm" onclick="closeFormationModal()"></div>
+        <div class="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 bg-white w-full max-w-2xl rounded-3xl shadow-2xl overflow-hidden max-h-[90vh] overflow-y-auto">
+            <div class="relative h-64">
+                <img id="form-modal-img" src="" class="w-full h-full object-cover">
+                <div class="absolute inset-0 bg-gradient-to-t from-black/60 to-transparent"></div>
+                <button onclick="closeFormationModal()" class="absolute top-4 right-4 w-10 h-10 bg-white/20 backdrop-blur rounded-full flex items-center justify-center hover:bg-white text-white hover:text-black font-bold shadow-lg transition-colors">✕</button>
+                <div class="absolute bottom-6 left-8">
+                    <span id="form-modal-tag" class="text-xs font-bold text-white bg-duja-mauve px-3 py-1 rounded-full uppercase tracking-widest mb-2 inline-block">Formation</span>
+                    <h3 id="form-modal-title" class="text-3xl font-display font-bold text-white shadow-sm">Title</h3>
+                </div>
+            </div>
+            <div class="p-8 lg:p-10">
+                <div class="flex items-center justify-between mb-6">
+                     <span id="form-modal-price" class="text-2xl font-bold text-duja-text block"></span>
+                     <span class="text-green-600 font-bold bg-green-50 px-3 py-1 rounded-full text-sm">Disponible</span>
+                </div>
+               
+                <p id="form-modal-desc" class="text-gray-600 mb-8 leading-relaxed text-lg">Description...</p>
+                
+                <button onclick="buyServiceViaWhatsapp()" class="w-full py-4 btn-whatsapp text-white font-bold rounded-xl hover:shadow-lg hover:shadow-green-200 transition-all flex justify-center items-center gap-3 transform hover:-translate-y-1">
+                    <i class="fa-brands fa-whatsapp text-2xl"></i> 
+                    <span>S'inscrire sur WhatsApp</span>
+                </button>
+                <p class="text-center text-xs text-gray-400 mt-4">Places limitées pour la prochaine session.</p>
+            </div>
+        </div>
+    </div>
+
+    <!-- PRODUCT MODAL -->
+    <div id="product-modal" class="fixed inset-0 z-[100] hidden">
+        <!-- Backdrop -->
+        <div class="absolute inset-0 bg-black/70 backdrop-blur-sm transition-opacity" onclick="closeProductModal()"></div>
+        
+        <!-- Modal Content -->
+        <div class="absolute inset-0 md:inset-10 bg-white md:rounded-2xl shadow-2xl overflow-hidden flex flex-col md:flex-row animate-fade-in">
+            <button onclick="closeProductModal()" class="absolute top-4 right-4 z-20 w-10 h-10 bg-white rounded-full flex items-center justify-center shadow-md hover:bg-gray-100 transition-colors text-black">
+                <i class="fa-solid fa-times text-lg"></i>
+            </button>
+
+            <!-- Scrollable Container -->
+            <div class="flex flex-col md:flex-row w-full h-full overflow-y-auto md:overflow-hidden">
+                
+                <!-- Left: Image -->
+                <div class="w-full md:w-1/2 h-64 md:h-full bg-gray-100 relative group">
+                    <img id="modal-img" src="" class="w-full h-full object-cover">
+                </div>
+
+                <!-- Right: Details & Related -->
+                <div class="w-full md:w-1/2 flex flex-col h-full bg-white">
+                    <!-- Product Info Area (Scrollable if needed) -->
+                    <div class="p-8 lg:p-12 overflow-y-auto flex-grow custom-scrollbar">
+                        <span id="modal-category" class="text-xs font-bold text-duja-mauve uppercase tracking-widest mb-2 block">Catégorie</span>
+                        <h2 id="modal-title" class="text-3xl font-display font-bold text-gray-800 mb-2">Titre du produit</h2>
+                        <div class="flex items-center gap-4 mb-6">
+                            <span id="modal-price" class="text-2xl font-bold text-duja-text">Price</span>
+                            <span id="modal-stock-badge" class="hidden px-3 py-1 bg-red-100 text-red-600 text-xs font-bold rounded-full border border-red-200 badge-pulse">
+                                <i class="fa-solid fa-fire mr-1"></i> Fin de stock
+                            </span>
+                        </div>
+                        
+                        <p class="text-gray-500 leading-relaxed mb-6 text-sm">
+                            Ce produit est fabriqué avec des matériaux de haute qualité, parfait pour vos projets de couture et de création. 
+                            <br>Disponible immédiatement. Livraison sur 58 wilayas.
+                        </p>
+
+                        <!-- CTA -->
+                        <div class="space-y-3 mb-10 bg-gray-50 p-4 rounded-xl border border-gray-100">
+                            <button onclick="buyCurrentProduct()" class="w-full py-4 bg-[#25D366] text-white font-bold rounded-xl hover:bg-[#20bd5a] transition-all flex items-center justify-center gap-3 shadow-lg hover:shadow-green-200">
+                                <i class="fa-brands fa-whatsapp text-xl"></i> Commander maintenant
+                            </button>
+                            <div class="flex justify-between text-xs text-gray-500 px-1 font-medium">
+                                <span class="flex items-center gap-1"><i class="fa-solid fa-truck"></i> Livraison 48h</span>
+                                <span class="flex items-center gap-1"><i class="fa-solid fa-money-bill-wave"></i> Paiement à la livraison</span>
+                            </div>
+                        </div>
+
+                        <!-- RELATED PRODUCTS (Scrolling Horizontal) -->
+                        <div class="border-t border-gray-100 pt-6">
+                            <h4 class="font-bold text-gray-800 mb-4 flex items-center justify-between">
+                                Produits Similaires
+                                <span class="text-xs font-normal text-duja-mauve cursor-pointer hover:underline" onclick="closeProductModal()">Voir tout</span>
+                            </h4>
+                            <div id="related-products-container" class="flex gap-4 overflow-x-auto hide-scroll pb-2">
+                                <!-- Injected via JS -->
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- JS Logic -->
+    <script>
+        // --- DATA ---
+        const formations = [
+            { id: 1, title: "Lancer sa Marque", price: "18,000 DA", image: "https://images.unsplash.com/photo-1558769132-cb1aea458c5e?q=80&w=800&auto=format&fit=crop", desc: "De l'idée à la vente. Apprenez à créer une collection de A à Z." },
+            { id: 2, title: "Packaging Pro", price: "9,500 DA", image: "https://www.thecustomboxes.com/uploads_f/1718971606.How-Custom-Packaging-is-Leading-the-Main-Role-in-Industry.webp", desc: "Unboxing experience. Rendez vos produits irrésistibles." },
+            { id: 3, title: "Gestion Business", price: "12,000 DA", image: "https://images.unsplash.com/photo-1554224155-6726b3ff858f?q=80&w=800&auto=format&fit=crop", desc: "Comptabilité simple pour les créatrices." }
+        ];
+
+        // Expanded Product List with 'stock' status for animation
+        const products = [
+            // Tissus
+            { id: 101, category: "tissu", title: "Soie de Médine - Rose", price: "1,200 DA/m", stock: "ok", image: "https://www.my-qamis.com/1455-product_default/hijab-soie-de-medine-blanc.jpg" },
+            { id: 102, category: "tissu", title: "Coton Imprimé Floral", price: "800 DA/m", stock: "low", image: "https://www.mercerine.com/190751-large_default/tissu-coton-imprime-fleurs-elegantes-sur-fond-nude.jpg" },
+            { id: 108, category: "tissu", title: "Satin Duchesse", price: "1,800 DA/m", stock: "ok", image: "https://www.bridalfabrics.fr/cdn/shop/files/a_036ed6fc-fec8-4833-88af-12dfd06de152_1800x.jpg?v=1729105410" },
+            { id: 109, category: "tissu", title: "Velours Royal Bleu", price: "2,200 DA/m", stock: "low", image: "https://dqp736wsu6w3m.cloudfront.net/s3bucket/w1000/looks/1481/royal-blue-velvet-evening-suit-1.jpg" },
+            { id: 110, category: "tissu", title: "Dentelle Blanche", price: "3,000 DA/m", stock: "ok", image: "https://zapaka.fr/cdn/shop/files/Image52.jpg?v=1729237633" },
+            
+            // Mercerie
+            { id: 103, category: "mercerie", title: "Ciseaux Couture Or", price: "2,500 DA", stock: "low", image: "https://m.media-amazon.com/images/I/61LXbAfm7bL._AC_UF894,1000_QL80_.jpg" },
+            { id: 107, category: "mercerie", title: "Set Fils à Broder", price: "900 DA", stock: "ok", image: "https://m.media-amazon.com/images/I/81Ul0-PrbsL.jpg" },
+            { id: 111, category: "mercerie", title: "Machine à Coudre Mini", price: "8,500 DA", stock: "ok", image: "https://m.media-amazon.com/images/I/61Lcx3gGBIL.jpg" },
+            
+            // Patrons
+            { id: 104, category: "patron", title: "Patron Robe Été", price: "1,500 DA", stock: "ok", image: "https://images.unsplash.com/photo-1595341888016-a392ef81b7de?q=80&w=600&auto=format&fit=crop" },
+            { id: 112, category: "patron", title: "Kit Débutant Sac", price: "3,200 DA", stock: "ok", image: "https://m.media-amazon.com/images/I/81zZz7X9L0L.jpg" },
+
+            // Lifestyle
+            { id: 105, category: "lifestyle", title: "Mug 'Boss Lady'", price: "1,200 DA", stock: "ok", image: "https://images.unsplash.com/photo-1514228742587-6b1558fcca3d?q=80&w=600&auto=format&fit=crop" },
+            { id: 106, category: "lifestyle", title: "Planner 2025", price: "2,200 DA", stock: "low", image: "https://images.unsplash.com/photo-1506784983877-45594efa4cbe?q=80&w=600&auto=format&fit=crop" },
+            { id: 113, category: "lifestyle", title: "Bougie Parfumée", price: "1,400 DA", stock: "ok", image: "https://images.unsplash.com/photo-1603006905003-be475563bc59?q=80&w=600&auto=format&fit=crop" },
+        ];
+
+        // --- RENDER FUNCTIONS ---
+
+        function renderFormations() {
+            const grid = document.getElementById('formations-grid');
+            grid.innerHTML = formations.map(f => `
+                <div class="group bg-white rounded-2xl overflow-hidden shadow-sm hover:shadow-xl transition-all duration-300 border border-gray-100 cursor-pointer" onclick="openFormationModal(${f.id})">
+                    <div class="h-64 overflow-hidden relative">
+                        <img src="${f.image}" class="w-full h-full object-cover transform group-hover:scale-110 transition-transform duration-700">
+                        <div class="absolute inset-0 bg-black/20 group-hover:bg-black/10 transition-colors"></div>
+                        <div class="absolute bottom-4 left-4 bg-white/90 backdrop-blur px-4 py-2 rounded-lg font-bold text-duja-text text-sm shadow-md">
+                            ${f.price}
+                        </div>
+                    </div>
+                    <div class="p-6">
+                        <h3 class="text-xl font-display font-bold text-gray-800 mb-2">${f.title}</h3>
+                        <p class="text-gray-500 text-sm mb-4">${f.desc}</p>
+                        <span class="text-duja-mauve font-semibold text-sm group-hover:underline">Voir le programme &rarr;</span>
+                    </div>
+                </div>
+            `).join('');
+        }
+
+        let currentCategory = 'all';
+
+        function renderProducts() {
+            const grid = document.getElementById('products-grid');
+            const filtered = currentCategory === 'all' 
+                ? products 
+                : products.filter(p => p.category === currentCategory);
+
+            // Update Counter
+            document.getElementById('product-count').innerHTML = `<span class="text-duja-text font-bold">${filtered.length}</span> Produits trouvés`;
+
+            grid.innerHTML = filtered.map(p => {
+                // Low stock Badge with Animation
+                const stockBadge = p.stock === 'low' 
+                    ? `<div class="absolute top-3 left-3 bg-white text-red-600 text-[10px] font-bold px-3 py-1 rounded-full shadow-md badge-pulse flex items-center gap-1 z-10 border border-red-100 uppercase tracking-wide">
+                        <i class="fa-solid fa-fire"></i> Vite !
+                       </div>` 
+                    : '';
+
+                return `
+                <div class="group relative bg-white rounded-xl shadow-sm border border-gray-100 hover:shadow-xl hover:border-duja-mauve/30 transition-all duration-300 overflow-hidden" onclick="openProductModal(${p.id})">
+                    <div class="aspect-[4/5] overflow-hidden bg-gray-100 relative">
+                        ${stockBadge}
+                        <img src="${p.image}" class="w-full h-full object-cover transition-transform duration-700 group-hover:scale-110">
+                        
+                        <!-- Overlay Button -->
+                        <div class="absolute inset-0 bg-black/20 opacity-0 group-hover:opacity-100 transition-opacity flex items-center justify-center">
+                            <button class="bg-white text-black px-6 py-3 rounded-full font-bold transform translate-y-4 group-hover:translate-y-0 transition-all duration-300 shadow-xl text-sm hover:bg-duja-mauve hover:text-white">
+                                <i class="fa-regular fa-eye"></i> Aperçu Rapide
+                            </button>
+                        </div>
+                    </div>
+                    <div class="p-4">
+                        <div class="flex justify-between items-start mb-1">
+                            <p class="text-[10px] text-gray-400 uppercase font-bold tracking-wider">${p.category}</p>
+                            ${p.stock === 'low' ? '<span class="text-[10px] text-red-500 font-bold">Stock Faible</span>' : ''}
+                        </div>
+                        <h3 class="font-display font-bold text-gray-800 text-lg truncate mb-1">${p.title}</h3>
+                        <div class="flex items-center justify-between mt-3">
+                            <span class="text-duja-text font-bold text-lg">${p.price}</span>
+                            <button class="w-8 h-8 rounded-full bg-gray-50 flex items-center justify-center text-gray-400 hover:bg-duja-text hover:text-white transition-colors">
+                                <i class="fa-solid fa-plus"></i>
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            `}).join('');
+        }
+
+        function filterProducts(cat, btn) {
+            currentCategory = cat;
+            
+            // UI Toggle
+            document.querySelectorAll('.sidebar-link').forEach(b => b.classList.remove('active'));
+            btn.classList.add('active');
+
+            // Render with Animation Reset
+            const grid = document.getElementById('products-grid');
+            grid.classList.add('opacity-0', 'translate-y-4');
+            setTimeout(() => {
+                renderProducts();
+                grid.classList.remove('opacity-0', 'translate-y-4');
+            }, 200);
+        }
+
+        // --- PRODUCT MODAL LOGIC ---
+        let currentProduct = null;
+
+        function openProductModal(id) {
+            currentProduct = products.find(p => p.id === id);
+            if(!currentProduct) return;
+
+            // Fill Data
+            document.getElementById('modal-img').src = currentProduct.image;
+            document.getElementById('modal-title').innerText = currentProduct.title;
+            document.getElementById('modal-price').innerText = currentProduct.price;
+            document.getElementById('modal-category').innerText = currentProduct.category;
+
+            // Handle Stock Badge in Modal
+            const badge = document.getElementById('modal-stock-badge');
+            if(currentProduct.stock === 'low') {
+                badge.classList.remove('hidden');
+                badge.classList.add('flex');
+            } else {
+                badge.classList.add('hidden');
+                badge.classList.remove('flex');
+            }
+
+            // --- GENERATE RELATED PRODUCTS ---
+            const relatedContainer = document.getElementById('related-products-container');
+            const related = products.filter(p => p.category === currentProduct.category && p.id !== currentProduct.id);
+            const fallback = products.filter(p => p.id !== currentProduct.id).slice(0, 4);
+            const displayList = related.length > 0 ? related : fallback;
+
+            relatedContainer.innerHTML = displayList.map(rp => `
+                <div class="min-w-[140px] w-[140px] cursor-pointer group" onclick="openProductModal(${rp.id})">
+                    <div class="h-32 rounded-lg overflow-hidden mb-2 relative border border-gray-100">
+                        <img src="${rp.image}" class="w-full h-full object-cover group-hover:opacity-80 transition-opacity">
+                    </div>
+                    <p class="text-xs font-bold text-gray-800 truncate">${rp.title}</p>
+                    <p class="text-xs text-duja-mauve font-semibold">${rp.price}</p>
+                </div>
+            `).join('');
+
+            document.getElementById('product-modal').classList.remove('hidden');
+            document.body.style.overflow = 'hidden';
+        }
+
+        function closeProductModal() {
+            document.getElementById('product-modal').classList.add('hidden');
+            document.body.style.overflow = 'auto';
+        }
+
+        function buyCurrentProduct() {
+            if(!currentProduct) return;
+            const phone = "213793726558";
+            const msg = `Salam Nabra, je suis intéressé par : ${currentProduct.title} (${currentProduct.price}). Est-il disponible ?`;
+            window.open(`https://wa.me/${phone}?text=${encodeURIComponent(msg)}`, '_blank');
+        }
+
+        // --- FORMATION MODAL LOGIC (New) ---
+        let currentFormation = null;
+
+        function openFormationModal(id) {
+            currentFormation = formations.find(f => f.id === id);
+            if(!currentFormation) return;
+
+            document.getElementById('form-modal-img').src = currentFormation.image;
+            document.getElementById('form-modal-title').innerText = currentFormation.title;
+            document.getElementById('form-modal-price').innerText = currentFormation.price;
+            document.getElementById('form-modal-desc').innerText = currentFormation.desc;
+
+            document.getElementById('formation-modal').classList.remove('hidden');
+            document.body.style.overflow = 'hidden';
+        }
+
+        function closeFormationModal() {
+            document.getElementById('formation-modal').classList.add('hidden');
+            document.body.style.overflow = 'auto';
+        }
+
+        function buyServiceViaWhatsapp() {
+            if(!currentFormation) return;
+            const phone = "213793726558";
+            const msg = `Salam Nabra, je souhaite m'inscrire à la formation : ${currentFormation.title} (${currentFormation.price}).`;
+            window.open(`https://wa.me/${phone}?text=${encodeURIComponent(msg)}`, '_blank');
+        }
+
+        // --- INITIALIZATION ---
+        document.addEventListener('DOMContentLoaded', () => {
+            renderFormations();
+            renderProducts();
+
+            // AUTO POPUP LOGIC: Open "Lancer sa Marque" (ID 1) after 2.5 seconds
+            setTimeout(() => {
+                openFormationModal(1);
+            }, 2500);
+
+            // Scroll Reveal Observer
+            const observer = new IntersectionObserver((entries) => {
+                entries.forEach(entry => {
+                    if(entry.isIntersecting) {
+                        entry.target.classList.add('active');
+                    }
+                });
+            }, { threshold: 0.1 });
+
+            document.querySelectorAll('.reveal').forEach(el => observer.observe(el));
+
+            // Mobile Menu
+            const menu = document.getElementById('mobile-menu');
+            const toggle = () => menu.classList.toggle('translate-x-full');
+            document.getElementById('mobile-menu-btn').onclick = toggle;
+            document.getElementById('close-menu-btn').onclick = toggle;
+            document.querySelectorAll('.mobile-link').forEach(l => l.onclick = toggle);
+
+            // Header Scroll Effect
+            window.addEventListener('scroll', () => {
+                const h = document.getElementById('main-header');
+                window.scrollY > 50 ? h.classList.add('shadow-md', 'py-2') : h.classList.remove('shadow-md', 'py-2');
+                window.scrollY > 50 ? h.classList.remove('py-4') : h.classList.add('py-4');
+            });
+        });
+    </script>
+</body>
+</html>
